@@ -2,53 +2,161 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Jump to Keyword</title>
+  <title>Rebuttal Guide Search</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
-    input[type="text"] {
-      width: 100%; padding: 10px; font-size: 16px;
-      margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px;
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background: #f9f9f9;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    .entry {
+      margin-bottom: 25px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
     .highlight {
-      background-color: yellow;
+      background-color: #ffff8d;
+    }
+    .objection {
+      font-weight: bold;
+      color: #333;
+    }
+    .rebuttal {
+      margin-top: 10px;
+      color: #555;
     }
   </style>
 </head>
 <body>
 
-  <input type="text" id="search" placeholder="Type to search and jump...">
+  <h1>Search Objection & Rebuttal</h1>
+  <input type="text" id="search" placeholder="Type keywords like 'Square', 'statement', 'not interested'...">
 
-  <div class="content">
-    <p id="item1">Rebuttal: “I'm not interested” → Response: “Totally understand. May I ask why, just so I don’t waste your time?”</p>
-    <p id="item2">Rebuttal: “I already have a processor” → Response: “That’s great! We don’t want to replace what works—just show you a comparison.”</p>
-    <p id="item3">Rebuttal: “Send me an email” → Response: “I can do that. Can I ask one quick thing to make sure it's relevant?”</p>
-    <p id="item4">Equipment Offer: Smart terminal with no monthly rental fees</p>
-    <p id="item5">Competitor: Square charges 2.6% + 10¢ per swipe</p>
-    <p id="item6">Package: Standard Plan - $19.95/month with no long-term contract</p>
+  <div id="content">
+    <!-- Entries are injected here -->
   </div>
 
   <script>
-    const searchBox = document.getElementById("search");
+    const entries = [
+      {
+        objection: "I DON’T WANT TO SWITCH",
+        rebuttal: "We are simply offering to analyze and show you the rates and fees you are paying now. Most merchants don’t know all their fees..."
+      },
+      {
+        objection: "I AM HESITANT TO PROVIDE MY DOCUMENT",
+        rebuttal: "You can block off your business name and Merchant ID number. Just leave the fees, volume, rates, and other costs..."
+      },
+      {
+        objection: "I DON’T WANT TO SEND ANYTHING",
+        rebuttal: "I respect your decision, but may I ask what is the percentage that you are currently paying? How about your monthly volume..."
+      },
+      {
+        objection: "I WANT A CALCULATION OF SAVINGS",
+        rebuttal: "If they want a calculation, then call the attention of a sales rep immediately: One moment, my supervisor will take over the call..."
+      },
+      {
+        objection: "NOT INTERESTED",
+        rebuttal: "Are you passing your fees to your customers now? OR Do you know what your overall percentage is for fees?... "
+      },
+      {
+        objection: "I AM NOT READY TO ACCEPT CREDIT CARD PAYMENTS",
+        rebuttal: "I understand. Have you considered increasing your sales by providing other payment options to your customers?..."
+      },
+      {
+        objection: "WHY DO YOU NEED MY MERCHANT BILLING STATEMENT",
+        rebuttal: "When we check your volume, types of different cards, average transaction size... the statement will provide the basis..."
+      },
+      {
+        objection: "I AM WITH SQUARE WE DON’T HAVE A MONTHLY FEE. YOU GUYS DO",
+        rebuttal: "We also don’t have any monthly fees. And Square just raised their rates to 15 cents per transaction..."
+      },
+      {
+        objection: "I HAVE A BUSINESS PARTNER",
+        rebuttal: "Excellent! Getting this free rate analysis will help you in making the best decision with your partner..."
+      },
+      {
+        objection: "I WANT AN IN-PERSON MEETING",
+        rebuttal: "Local reps charge higher rates to cover the expenses of their travel. And local reps cannot service your account as well as our in-house team..."
+      },
+      {
+        objection: "IT’S TAX SEASON, (OR ANY HOLIDAY), AND WE ARE BUSY",
+        rebuttal: "That’s good to hear! Growing businesses are always busy. If you could quickly send me one copy of your merchant statement..."
+      },
+      {
+        objection: "MY FEES ARE FINE. I WANT TO STAY WITH MY CURRENT PROVIDER",
+        rebuttal: "Are your rates still the same or have they increased? Most processors increase rates twice each year..."
+      },
+      {
+        objection: "I WANT TO REVIEW THE PROPOSAL BEFORE SENDING THE STATEMENT",
+        rebuttal: "The proposal can only be customized to the lowest possible rates for your business after we see your monthly volume..."
+      },
+      {
+        objection: "PCI COMPLIANCE FEE QUESTIONS",
+        rebuttal: "We have no PCI compliance fees. We do provide assistance in the completion of your PCI compliance once you are with us..."
+      },
+      {
+        objection: "I JUST RENEWED/SIGNED A NEW CONTRACT",
+        rebuttal: "Perfect! Many merchants switch and do not get the rates they expected... Now is the perfect time to check if your new rates are lower..."
+      },
+      {
+        objection: "BBB REBUTTAL",
+        rebuttal: "We would like to encourage you to check our Trustpilot rating, where we have a rating of 4.7 out of 5.0 stars..."
+      },
+      {
+        objection: "CAN YOU INTEGRATE TO MY POS",
+        rebuttal: "Rebuttal: Part of your free rate analysis includes a free POS consultation. Our technicians will verify how we can integrate..."
+      }
+    ];
 
-    searchBox.addEventListener("input", () => {
-      const keyword = searchBox.value.toLowerCase().trim();
-      const paragraphs = document.querySelectorAll(".content p");
+    const content = document.getElementById("content");
 
+    function displayEntries(filter = "") {
+      content.innerHTML = "";
       let firstMatch = null;
+      entries.forEach((entry, index) => {
+        const fullText = entry.objection + " " + entry.rebuttal;
+        const isMatch = fullText.toLowerCase().includes(filter.toLowerCase());
 
-      paragraphs.forEach(p => {
-        p.classList.remove("highlight");
-
-        if (keyword && p.textContent.toLowerCase().includes(keyword)) {
-          if (!firstMatch) firstMatch = p;
-          p.classList.add("highlight");
+        const div = document.createElement("div");
+        div.classList.add("entry");
+        if (isMatch && filter) {
+          div.classList.add("highlight");
+          if (!firstMatch) firstMatch = div;
         }
+
+        div.innerHTML = `
+          <div class="objection">${entry.objection}</div>
+          <div class="rebuttal">${entry.rebuttal}</div>
+        `;
+        content.appendChild(div);
       });
 
       if (firstMatch) {
         firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
       }
+    }
+
+    document.getElementById("search").addEventListener("input", (e) => {
+      const keyword = e.target.value;
+      displayEntries(keyword);
     });
+
+    // Display all on load
+    displayEntries();
   </script>
 
 </body>
