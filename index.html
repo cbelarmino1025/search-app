@@ -2,32 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Keyword Search</title>
+  <title>Jump to Keyword</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
+    body { font-family: Arial, sans-serif; padding: 20px; line-height: 1.6; }
     input[type="text"] {
       width: 100%; padding: 10px; font-size: 16px;
-      margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px;
+      margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px;
     }
-    .item {
-      padding: 10px; border-bottom: 1px solid #eee;
+    .highlight {
+      background-color: yellow;
     }
   </style>
 </head>
 <body>
 
-  <input type="text" id="searchInput" placeholder="Search by keyword...">
+  <input type="text" id="search" placeholder="Type to search and jump...">
 
-  <div id="content">
-    <div class="item">Rebuttal: “I’m not interested” → Response: “Totally understand. May I ask why, just so I don’t waste your time?”</div>
-    <div class="item">Rebuttal: “I already have a processor” → Response: “Great! We don’t want to replace what works—just show you a comparison.”</div>
-    <div class="item">Rebuttal: “Send me an email” → Response: “I can do that. Can I ask one quick thing to make sure it's relevant?”</div>
-    <div class="item">Package: Standard - $19.95/month, No long-term contract</div>
-    <div class="item">Competitor: Square charges 2.6% + 10¢ per swipe</div>
+  <div class="content">
+    <p id="item1">Rebuttal: “I'm not interested” → Response: “Totally understand. May I ask why, just so I don’t waste your time?”</p>
+    <p id="item2">Rebuttal: “I already have a processor” → Response: “That’s great! We don’t want to replace what works—just show you a comparison.”</p>
+    <p id="item3">Rebuttal: “Send me an email” → Response: “I can do that. Can I ask one quick thing to make sure it's relevant?”</p>
+    <p id="item4">Equipment Offer: Smart terminal with no monthly rental fees</p>
+    <p id="item5">Competitor: Square charges 2.6% + 10¢ per swipe</p>
+    <p id="item6">Package: Standard Plan - $19.95/month with no long-term contract</p>
   </div>
 
   <script>
-    const searchInput = document.getElementById("searchInput");
-    searchInput.addEventListener("keyup", function () {
-      let filter = searchInput.value.toLowerCase();
-      let items =
+    const searchBox = document.getElementById("search");
+
+    searchBox.addEventListener("input", () => {
+      const keyword = searchBox.value.toLowerCase().trim();
+      const paragraphs = document.querySelectorAll(".content p");
+
+      let firstMatch = null;
+
+      paragraphs.forEach(p => {
+        p.classList.remove("highlight");
+
+        if (keyword && p.textContent.toLowerCase().includes(keyword)) {
+          if (!firstMatch) firstMatch = p;
+          p.classList.add("highlight");
+        }
+      });
+
+      if (firstMatch) {
+        firstMatch.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  </script>
+
+</body>
+</html>
